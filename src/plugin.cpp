@@ -21,10 +21,10 @@ void init_VoxGlitch(Plugin* p)
   // p->addModel(modelDigitalProgrammer);
   // p->addModel(modelDigitalSequencer);
   // p->addModel(modelDigitalSequencerXP);
-  // p->addModel(modelDrumRandomizer);
+  p->addModel(modelDrumRandomizer);
   // p->addModel(modelCueResearch); 
-  // p->addModel(modelGlitchSequencer);
-  // p->addModel(modelGhosts);
+  p->addModel(modelGlitchSequencer);
+  p->addModel(modelGhosts);
   // p->addModel(modelGrainEngineMK2);
   // p->addModel(modelGrainEngineMK2Expander);
   // p->addModel(modelGrainFx);

@@ -11,7 +11,11 @@
 //
 
 #include "plugin.hpp"
+#ifndef METAMODULE
 #include "osdialog.h"
+#else
+#include "async_filebrowser.hh"
+#endif
 #include "settings.hpp"
 
 // These two includes are required for Mac

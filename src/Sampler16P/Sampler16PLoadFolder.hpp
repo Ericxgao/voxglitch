@@ -7,7 +7,7 @@ struct Sampler16PLoadFolder : MenuItem
 	void onAction(const event::Action &e) override
 	{
 		const std::string dir = root_dir.empty() ? "" : root_dir;
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
 		Sampler16P *module = this->module;
 		unsigned int sample_number = this->sample_number;
 		async_dialog_filebrowser(false, NULL, dir.c_str(), text.c_str(), [module, sample_number](char *path) {

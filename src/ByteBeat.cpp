@@ -4,7 +4,11 @@
 
 #include "plugin.hpp"
 #ifndef METAMODULE
+#ifndef METAMODULE
 #include "osdialog.h"
+#else
+#include "async_filebrowser.hh"
+#endif
 #else
 #include "async_filebrowser.hh"
 #endif

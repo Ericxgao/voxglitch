@@ -382,6 +382,7 @@ struct WaveformWidget : TransparentWidget
 
     void onHover(const event::Hover &e) override
     {
+        #ifndef METAMODULE
         e.consume(this);
 
         if (areInteractionsLocked()) return;
@@ -402,12 +403,15 @@ struct WaveformWidget : TransparentWidget
                 scrubber_hover = false;
             }
         }
+        #endif
     }
 
     void onLeave(const event::Leave &e) override
     {
+        #ifndef METAMODULE
         TransparentWidget::onLeave(e);
         glfwSetCursor(APP->window->win, NULL);
+        #endif
     }
 
     bool areInteractionsLocked()

@@ -5,7 +5,11 @@
 #include <fstream>
 
 #include "plugin.hpp"
+#ifndef METAMODULE
 #include "osdialog.h"
+#else
+#include "async_filebrowser.hh"
+#endif
 
 #include "vgLib-2.0/constants.h"
 #include "vgLib-2.0/sample.hpp"

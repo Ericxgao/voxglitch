@@ -3,7 +3,11 @@
 //
 
 #include "plugin.hpp"
+#ifndef METAMODULE
 #include "osdialog.h"
+#else
+#include "async_filebrowser.hh"
+#endif
 #include "vgLib-1.0/constants.h"
 
 

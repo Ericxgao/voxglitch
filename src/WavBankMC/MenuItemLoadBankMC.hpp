@@ -4,7 +4,7 @@ struct MenuItemLoadBankMC : MenuItem
 
 	void onAction(const event::Action &e) override
 	{
-	#ifdef USING_CARDINAL_NOT_RACK
+	#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
 			WavBankMC *module = this->module;
 			async_dialog_filebrowser(false, NULL, module->path.c_str(), text.c_str(), [module](char* path) {
 				if (path) {

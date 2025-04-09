@@ -5,7 +5,7 @@ struct MenuItemLoadSample : MenuItem
 
     void onAction(const event::Action &e) override
     {
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         Repeater *module = this->module;
         unsigned int sample_number = this->sample_number;
         async_dialog_filebrowser(false, NULL, module->samples_root_dir.c_str(), "Load sample", [module, sample_number](char *filename)

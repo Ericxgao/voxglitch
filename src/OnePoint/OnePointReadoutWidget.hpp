@@ -57,7 +57,7 @@ struct OnePointReadoutWidget : TransparentWidget
 
     void onDoubleClick(const event::DoubleClick &e) override
     {
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         OnePoint *module = this->module;
         async_dialog_filebrowser(false, NULL, NULL, "Open txt", [module](char* path) {
             if (path != NULL) {

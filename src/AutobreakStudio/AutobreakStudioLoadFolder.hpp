@@ -6,7 +6,7 @@ struct AutobreakStudioLoadFolder : MenuItem
     void onAction(const event::Action &e) override
     {
         const std::string dir = root_dir.empty() ? "" : root_dir;
-#ifdef USING_CARDINAL_NOT_RACK || METAMODULE
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         AutobreakStudio *module = this->module;
         async_dialog_filebrowser(false, NULL, dir.c_str(), text.c_str(), [module](char *path) {
             if (path) {

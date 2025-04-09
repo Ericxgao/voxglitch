@@ -4,7 +4,7 @@ struct CueResearchLoadSample : MenuItem
 
     void onAction(const event::Action &e) override
     {
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         CueResearch *module = this->module;
         async_dialog_filebrowser(false, NULL, module->samples_root_dir.c_str(), "Load sample", [module](char *filename)
                                  {

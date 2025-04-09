@@ -582,7 +582,7 @@ struct GrooveBox : VoxglitchSamplerModule
 
     void importKitDialog(const std::string& kit_path)
     {
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         async_dialog_filebrowser(false, NULL, samples_root_dir.c_str(), "Import kit", [this, kit_path](char* path) {
             if (path == NULL)
                 return;
@@ -674,7 +674,7 @@ struct GrooveBox : VoxglitchSamplerModule
 
     void loadKitDialog()
     {
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         async_dialog_filebrowser(false, NULL, kit_dir.c_str(), "Load kit", [this](char* path) {
             if (path == NULL)
                 return;
@@ -694,7 +694,7 @@ struct GrooveBox : VoxglitchSamplerModule
 
     void saveKitDialog()
     {
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         async_dialog_filebrowser(true, NULL, kit_dir.c_str(), "Save kit", [this](char* path) {
             saveKitDialogHandling(path);
         });

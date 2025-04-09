@@ -57,7 +57,7 @@ struct LoadSamplesFromFolderMenuItem : MenuItem
 
     void onAction(const event::Action &e) override
     {
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         GrooveBox *module = this->module;
         // NOTE cardinal does not have async open for folders
         async_dialog_filebrowser(false, NULL, module->samples_root_dir.c_str(), "Load folder", [module](char *path) {
@@ -110,7 +110,7 @@ struct LoadSampleMenuItem : MenuItem
 
     void onAction(const event::Action &e) override
     {
-#ifdef USING_CARDINAL_NOT_RACK
+#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         GrooveBox *module = this->module;
         unsigned int track_number = this->track_number;
         async_dialog_filebrowser(false, NULL, module->samples_root_dir.c_str(), "Load sample", [module, track_number](char *filename)

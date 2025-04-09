@@ -5,7 +5,11 @@
 // * add reset input
 
 #include "plugin.hpp"
+#ifndef METAMODULE
 #include "osdialog.h"
+#else
+#include "async_filebrowser.hh"
+#endif
 #include "settings.hpp"
 #include <vector>
 #include "cmath"
