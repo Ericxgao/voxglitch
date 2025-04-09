@@ -109,6 +109,28 @@ struct GrainFx : VoxglitchModule
     configParam(INTERNAL_MODULATION_OUTPUT_POLARITY_SWITCH, 0.0f, 1.0f, 0.0f, "InternalModulationOutputPolaritySwitch");
 
     grain_fx_core.common = &common;
+
+    #ifdef METAMODULE
+    configInput(JITTER_CV_INPUT, "Jitter CV");
+    configInput(WINDOW_INPUT, "Window");
+    configInput(SAMPLE_PLAYBACK_POSITION_INPUT, "Sample Playback Position");
+    configInput(PITCH_INPUT, "Pitch");
+    configInput(SPAWN_TRIGGER_INPUT, "Spawn Trigger");
+    configInput(CONTOUR_INPUT, "Contour");
+    configInput(PAN_INPUT, "Pan");
+    configInput(FREEZE_INPUT, "Freeze");
+    configInput(GRAINS_INPUT, "Grains");
+    configInput(AUDIO_INPUT_LEFT, "Left Audio Input");
+    configInput(AUDIO_INPUT_RIGHT, "Right Audio Input");
+    configInput(SPAWN_INPUT, "Spawn");
+    configInput(INTERNAL_MODULATION_FREQUENCY_INPUT, "Internal Modulation Frequency");
+    configInput(INTERNAL_MODULATION_AMPLITUDE_INPUT, "Internal Modulation Amplitude");
+    configInput(INTERNAL_MODULATION_WAVEFORM_INPUT, "Internal Modulation Waveform");
+
+    configOutput(AUDIO_OUTPUT_LEFT, "Left Audio Output");
+    configOutput(AUDIO_OUTPUT_RIGHT, "Right Audio Output");
+    configOutput(INTERNAL_MODULATION_OUTPUT, "Internal Modulation Output");
+    #endif
   }
 
   json_t *dataToJson() override

@@ -440,7 +440,9 @@ struct TrackWidget : TransparentWidget
             float scrubber_x = container_padding_left + (relative_playback_pos * drawable_width);
             
             if (std::abs(e.pos.x - scrubber_x) < scrubber_hit_zone) {
+                #ifndef METAMODULE
                 glfwSetCursor(APP->window->win, glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR));
+                #endif
                 return;
             }
         }
@@ -467,7 +469,9 @@ struct TrackWidget : TransparentWidget
                     
                     if (std::abs(e.pos.x - marker_x) < marker_distance)
                     {
+                        #ifndef METAMODULE
                         glfwSetCursor(APP->window->win, glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR));
+                        #endif
                         return;
                     }
                 }
@@ -475,7 +479,9 @@ struct TrackWidget : TransparentWidget
         }
 
         // If not hovering over scrubber or marker, set cursor to default
+        #ifndef METAMODULE
         glfwSetCursor(APP->window->win, NULL);
+        #endif
     }
 
     void onLeave(const event::Leave &e) override
@@ -483,7 +489,9 @@ struct TrackWidget : TransparentWidget
         TransparentWidget::onLeave(e);
         
         // Reset cursor when leaving widget
+        #ifndef METAMODULE
         glfwSetCursor(APP->window->win, NULL);
+        #endif
         
         // Also reset drag states since we've left the widget
         if (scrubber_dragging) {
@@ -581,7 +589,10 @@ struct TrackWidget : TransparentWidget
                 scrubber_dragging = false;
                 track_model->scrubber_dragging = false;
             }
+
+            #ifndef METAMODULE
             glfwSetCursor(APP->window->win, NULL);
+            #endif
         }
         // Handle right-click for marker deletion
         else if (e.action == GLFW_PRESS && e.button == GLFW_MOUSE_BUTTON_RIGHT && (e.mods & RACK_MOD_MASK) == 0)
@@ -741,7 +752,9 @@ struct TrackWidget : TransparentWidget
                     markers_being_dragged = nullptr;
 
                     // Set mouse pointer back to default
+                    #ifndef METAMODULE
                     glfwSetCursor(APP->window->win, NULL);
+                    #endif
                 }
 
                 // Remove the first marker found (since we are returning all nearby markers, but removing only one)

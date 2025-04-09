@@ -27,6 +27,13 @@ struct Looper : VoxglitchSamplerModule
 	{
     config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS);
     configParam(VOLUME_SLIDER, 0.0f, 1.0f, 1.0f, "VolumeSlider");
+
+    #ifdef METAMODULE
+    configInput(RESET_INPUT, "Reset");
+
+    configOutput(AUDIO_OUTPUT_LEFT, "Left Audio Output");
+    configOutput(AUDIO_OUTPUT_RIGHT, "Right Audio Output");
+    #endif
 	}
 
 	// Autosave module data.  VCV Rack decides when this should be called.

@@ -5,17 +5,21 @@ struct MenuItemLoadBankMC : MenuItem
 	void onAction(const event::Action &e) override
 	{
 	#if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
-			WavBankMC *module = this->module;
-			async_dialog_filebrowser(false, NULL, module->path.c_str(), text.c_str(), [module](char* path) {
-				if (path) {
-					if (char *rpath = strrchr(path, CARDINAL_OS_SEP))
-						*rpath = '\0';
-					pathSelected(module, path);
-					free(path);
+		WavBankMC *module = this->module;
+		async_dialog_filebrowser(false, NULL, module->path.c_str(), text.c_str(), [module](char* path) {
+			if (path) {
+				char *last_slash = strrchr(path, '/');
+				if (last_slash) {
+					*last_slash = '\0';
 				}
-			});
+
+				printf("path: %s\n", path);
+				pathSelected(module, path);
+				free(path);
+			}
+		});
 	#else
-			pathSelected(module, module->selectPathVCV());
+	pathSelected(module, module->selectPathVCV());
 	#endif
 	}
 

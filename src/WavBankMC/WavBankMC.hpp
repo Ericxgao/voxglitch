@@ -269,11 +269,14 @@ struct WavBankMC : VoxglitchSamplerModule
     // loaded out of order.  I think it's a mac thing.
     sort(dirList.begin(), dirList.end());
 
+    printf("dirList.size(): %d\n", dirList.size());
+
 		// TODO: Decide on a maximum memory consuption allowed and abort if
 		// that amount of member would be exhausted by loading all of the files
 		// in the folder.
 		for (auto entry : dirList)
 		{
+      printf("entry: %s\n", entry.c_str());
 			if (
         // Something happened in Rack 2 where the extension started to include
         // the ".", so I decided to check for both versions, just in case.
@@ -284,14 +287,20 @@ struct WavBankMC : VoxglitchSamplerModule
         // Create new multi-channel sample.  This structure is defined in Common/sample_mc.hpp
 				SampleMC new_sample;
 
+        printf("entry: %s\n", entry.c_str());
+
         // Load the sample data from the disk
 				new_sample.load(entry);
+
+        printf("new_sample.filename: %s\n", new_sample.filename.c_str());
 
         // Reminder: .push_back is a method of vectors that pushes the object
         // to the end of a list.
 				this->samples.push_back(new_sample);
 			}
 		}
+
+    printf("this->samples.size(): %d\n", this->samples.size());
 
     // Sort the samples vector based on a member attribute, e.g., filename
     sort_samples_by_filename(this->samples);

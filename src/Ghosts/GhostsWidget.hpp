@@ -65,7 +65,9 @@ struct GhostsWidget : VoxglitchSamplerModuleWidget
 		{
 			WaveformWidget *waveform_widget = new WaveformWidget(WAVEFORM_WIDGET_WIDTH, WAVEFORM_WIDGET_HEIGHT, &this->module->waveform_model);
 			waveform_widget->box.pos = Vec(70.0, 45.0);
+			#ifndef METAMODULE
 			waveform_widget->hide();
+			#endif
 			addChild(waveform_widget);
 		}
 	}

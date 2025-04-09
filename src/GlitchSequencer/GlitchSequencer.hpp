@@ -53,6 +53,16 @@ struct GlitchSequencer : VoxglitchModule
     {
       configParam(TRIGGER_GROUP_BUTTONS + i, 0.f, 1.f, 0.f, "TriggerGroupButton");
     }
+
+    #ifdef METAMODULE
+    configInput(STEP_INPUT, "Step");
+    configInput(RESET_INPUT, "Reset");
+
+    for(int i=0; i < NUMBER_OF_TRIGGER_GROUPS; i++)
+    {
+      configOutput(GATE_OUTPUTS + i, "Gate");
+    }
+    #endif
   }
 
   json_t *dataToJson() override

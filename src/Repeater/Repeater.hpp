@@ -73,6 +73,17 @@ struct Repeater : VoxglitchSamplerModule
         configParam(SMOOTH_SWITCH, 0.f, 1.f, 1.f, "Smooth");
 
         std::fill_n(loaded_filenames, NUMBER_OF_SAMPLES, "[ EMPTY ]");
+
+        #ifdef METAMODULE
+        configInput(TRIG_INPUT, "Trigger");
+        configInput(POSITION_INPUT, "Position");
+        configInput(CLOCK_DIVISION_INPUT, "Clock Division");
+        configInput(SAMPLE_SELECT_INPUT, "Sample Select");
+        configInput(PITCH_INPUT, "Pitch");
+
+        configOutput(WAV_OUTPUT, "Audio");
+        configOutput(TRG_OUTPUT, "Trigger");
+        #endif
     }
 
     // Autosave module data.  VCV Rack decides when this should be called.

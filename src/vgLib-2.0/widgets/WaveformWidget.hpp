@@ -334,9 +334,12 @@ struct WaveformWidget : TransparentWidget
             nvgLineTo(vg, x_position, height - container_padding_bottom);
         }
 
+        // Not sure why this segfaults on MetaModule here.
+        #ifndef METAMODULE
         nvgStrokeColor(vg, nvgRGBA(32, 178, 170, 255));
         nvgStrokeWidth(vg, 1.0f);
         nvgStroke(vg);
+        #endif
     }
 
     void onButton(const event::Button &e) override
@@ -382,7 +385,6 @@ struct WaveformWidget : TransparentWidget
 
     void onHover(const event::Hover &e) override
     {
-        #ifndef METAMODULE
         e.consume(this);
 
         if (areInteractionsLocked()) return;
@@ -395,21 +397,24 @@ struct WaveformWidget : TransparentWidget
             (waveform_model->playback_percentage * (width - (container_padding_left + container_padding_right)));
         
         if (std::abs(e.pos.x - scrubber_x) < scrubber_hit_zone) {
+            #ifndef METAMODULE
             glfwSetCursor(APP->window->win, glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR));
+            #endif
             scrubber_hover = true;
         } else {
             if (scrubber_hover) {
+                #ifndef METAMODULE
                 glfwSetCursor(APP->window->win, NULL);
+                #endif
                 scrubber_hover = false;
             }
         }
-        #endif
     }
 
     void onLeave(const event::Leave &e) override
     {
-        #ifndef METAMODULE
         TransparentWidget::onLeave(e);
+        #ifndef METAMODULE
         glfwSetCursor(APP->window->win, NULL);
         #endif
     }

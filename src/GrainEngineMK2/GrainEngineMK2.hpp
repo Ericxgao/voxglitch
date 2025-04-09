@@ -123,6 +123,17 @@ struct GrainEngineMK2 : VoxglitchSamplerModule
 
         rightExpander.producerMessage = producer_message;
         rightExpander.consumerMessage = consumer_message;
+
+        #ifdef METAMODULE
+        configInput(SPAWN_TRIGGER_INPUT, "Spawn Trigger");
+        configInput(PAN_INPUT, "Pan");
+        configInput(GRAINS_INPUT, "Grains");
+        configInput(RATE_INPUT, "Rate");
+        configInput(SAMPLE_INPUT, "Sample");
+
+        configOutput(AUDIO_OUTPUT_LEFT, "Left Audio Output");
+        configOutput(AUDIO_OUTPUT_RIGHT, "Right Audio Output");
+        #endif
     }
 
     ~GrainEngineMK2()

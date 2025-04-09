@@ -97,6 +97,22 @@ struct ByteBeat : Module
     configParam(PARAM_ATTENUATOR_1, 0.f, 1.f, 1.f, "Parameter 1 Attenuator", "%", 0.f, 100.f);
     configParam(PARAM_ATTENUATOR_2, 0.f, 1.f, 1.f, "Parameter 2 Attenuator", "%", 0.f, 100.f);
     configParam(PARAM_ATTENUATOR_3, 0.f, 1.f, 1.f, "Parameter 3 Attenuator", "%", 0.f, 100.f);
+
+    #ifdef METAMODULE
+    configInput(CLOCK_CV_INPUT, "Clock CV");
+    configInput(SYNC_CLOCK_INPUT, "Sync Clock");
+    
+    configInput(PARAM_INPUT_1, "Parameter 1");
+    configInput(PARAM_INPUT_2, "Parameter 2");
+    configInput(PARAM_INPUT_3, "Parameter 3");
+    configInput(EQUATION_INPUT, "Equation");
+    configInput(CLOCK_CV_INPUT, "Clock CV");
+    configInput(T_INPUT, "Time Input");
+    configInput(SYNC_CLOCK_INPUT, "Sync Clock");
+    
+    configOutput(AUDIO_OUTPUT, "Audio");
+    configOutput(DEBUG_OUTPUT, "Debug");
+    #endif
 	}
 
 	// Autosave module data.  VCV Rack decides when this should be called.

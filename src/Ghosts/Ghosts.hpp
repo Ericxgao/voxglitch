@@ -115,6 +115,19 @@ struct Ghosts : VoxglitchSamplerModule
 		waveform_model.sample = &sample;
 		waveform_model.visible = true;
 		waveform_model.playhead_position = 0;
+
+		#ifdef METAMODULE
+		configInput(PURGE_TRIGGER_INPUT, "Purge Trigger");
+		configInput(JITTER_CV_INPUT, "Jitter CV");
+		configInput(GHOST_PLAYBACK_LENGTH_INPUT, "Ghost Playback Length");
+		configInput(GRAVEYARD_CAPACITY_INPUT, "Graveyard Capacity");
+		configInput(GHOST_SPAWN_RATE_INPUT, "Ghost Spawn Rate");
+		configInput(SAMPLE_PLAYBACK_POSITION_INPUT, "Sample Playback Position");
+		configInput(PITCH_INPUT, "Pitch");
+
+		configOutput(AUDIO_OUTPUT_LEFT, "Left Audio Output");
+		configOutput(AUDIO_OUTPUT_RIGHT, "Right Audio Output");
+		#endif
 	}
 
 	json_t *dataToJson() override

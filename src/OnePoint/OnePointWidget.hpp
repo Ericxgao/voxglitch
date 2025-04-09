@@ -35,7 +35,11 @@ struct OnePointWidget : ModuleWidget
 
         // Add display
         OnePointReadoutWidget *one_point_readout_widget = new OnePointReadoutWidget();
+        #ifndef METAMODULE
         one_point_readout_widget->box.pos = Vec(16.6063, 110.5335);
+        #else
+        one_point_readout_widget->box.pos = Vec(42, 115);
+        #endif
         one_point_readout_widget->module = module;
         addChild(one_point_readout_widget);
     }

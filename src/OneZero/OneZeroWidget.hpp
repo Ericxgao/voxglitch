@@ -35,7 +35,11 @@ struct OneZeroWidget : ModuleWidget
 
         // Add display
         OneZeroReadoutWidget *one_zero_readout_widget = new OneZeroReadoutWidget();
+        #ifndef METAMODULE
         one_zero_readout_widget->box.pos = Vec(16.6063, 110.5335);
+        #else
+        one_zero_readout_widget->box.pos = Vec(42, 115);
+        #endif
         one_zero_readout_widget->module = module;
         addChild(one_zero_readout_widget);
     }

@@ -109,9 +109,13 @@ struct Sample
     float left = 0;
     float right = 0;
 
+    printf("path: %s\n", path.c_str());
+
     // Load the audio file
     if(! audioFile.load(path))
     {
+      
+      printf("audioFile.load(path) failed\n");
       this->loading = false;
       this->loaded = false;
       return(false);
@@ -159,6 +163,8 @@ struct Sample
     // Now that the audioFile has been read into memory, clear it out
     audioFile.samples[0].resize(0);
     audioFile.samples[1].resize(0);
+
+    printf("sample.loaded: %d\n", this->loaded);
 
     return(true);
   };

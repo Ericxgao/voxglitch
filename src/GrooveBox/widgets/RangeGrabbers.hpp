@@ -44,7 +44,9 @@ struct RangeGrabberRightWidget : TransparentWidget
 
   void onEnter(const event::Enter &e) override
   {
+    #ifndef METAMODULE
 		glfwSetCursor(APP->window->win, glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR));
+    #endif
 
     this->is_moused_over = true;
     TransparentWidget::onEnter(e);
@@ -52,7 +54,9 @@ struct RangeGrabberRightWidget : TransparentWidget
 
   void onLeave(const event::Leave &e) override
   {
+    #ifndef METAMODULE
     glfwSetCursor(APP->window->win, NULL);
+    #endif
 
     this->is_moused_over = false;
     TransparentWidget::onLeave(e);
@@ -128,7 +132,9 @@ struct RangeGrabberLeftWidget : TransparentWidget
 
   void onEnter(const event::Enter &e) override
   {
+    #ifndef METAMODULE
 		glfwSetCursor(APP->window->win, glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR));
+    #endif
 
     this->is_moused_over = true;
     TransparentWidget::onEnter(e);
@@ -136,7 +142,9 @@ struct RangeGrabberLeftWidget : TransparentWidget
 
   void onLeave(const event::Leave &e) override
   {
+    #ifndef METAMODULE
     glfwSetCursor(APP->window->win, NULL);
+    #endif
 
     this->is_moused_over = false;
     TransparentWidget::onLeave(e);

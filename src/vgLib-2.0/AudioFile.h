@@ -27,11 +27,15 @@
 #include <vector>
 #include <assert.h>
 #include <string>
-// #include <fstream>
+#ifndef METAMODULE
+#include <fstream>
+#else
+#include <cstdio>  // For FILE*, fopen, fread, fwrite, etc.
+#endif
 #include <unordered_map>
 #include <iterator>
 #include <algorithm>
-#include <cstdio>  // For FILE*, fopen, fread, fwrite, etc.
+
 
 //=============================================================
 /** The different types of audio file, plus some other types to 
@@ -392,6 +396,8 @@ bool AudioFile<T>::load (std::string filePath)
         // std::cout << filePath << std::endl;
         return false;
     }
+
+    printf("filePath: in audiofile %s\n", filePath.c_str());
     
     // Get file size
     fseek(file, 0, SEEK_END);
@@ -410,9 +416,12 @@ bool AudioFile<T>::load (std::string filePath)
     
     // get audio file format
     audioFileFormat = determineAudioFileFormat (fileData);
+
+    printf("audioFileFormat: %d\n", audioFileFormat);
     
     if (audioFileFormat == AudioFileFormat::Wave)
     {
+        printf("decodeWaveFile\n");
         return decodeWaveFile (fileData);
     }
     else if (audioFileFormat == AudioFileFormat::Aiff)
@@ -421,6 +430,7 @@ bool AudioFile<T>::load (std::string filePath)
     }
     else
     {
+        printf("Audio File Type: Error\n");
         // std::cout << "Audio File Type: " << "Error" << std::endl;
         return false;
     }
@@ -445,6 +455,7 @@ bool AudioFile<T>::decodeWaveFile (std::vector<uint8_t>& fileData)
     // then it is unlikely we'll able to read this file, so abort
     if (indexOfDataChunk == -1 || indexOfFormatChunk == -1 || headerChunkID != "RIFF" || format != "WAVE")
     {
+        printf("ERROR: this doesn't seem to be a valid .WAV file\n");
         // std::cout << "ERROR: this doesn't seem to be a valid .WAV file" << std::endl;
         return false;
     }
@@ -466,6 +477,7 @@ bool AudioFile<T>::decodeWaveFile (std::vector<uint8_t>& fileData)
     // check that the audio format is PCM
     if (audioFormat != 1)
     {
+        printf("ERROR: this is a compressed .WAV file and this library does not support decoding them at present\n");
         // std::cout << "ERROR: this is a compressed .WAV file and this library does not support decoding them at present" << std::endl;
         return false;
     }
@@ -473,6 +485,7 @@ bool AudioFile<T>::decodeWaveFile (std::vector<uint8_t>& fileData)
     // check the number of channels is mono or stereo
     if (numChannels < 1 ||numChannels > 2)
     {
+        printf("ERROR: this WAV file seems to be neither mono nor stereo (perhaps multi-track, or corrupted?)\n");
         // std::cout << "ERROR: this WAV file seems to be neither mono nor stereo (perhaps multi-track, or corrupted?)" << std::endl;
         return false;
     }
@@ -480,6 +493,7 @@ bool AudioFile<T>::decodeWaveFile (std::vector<uint8_t>& fileData)
     // check header data is consistent
     if ((numBytesPerSecond != (numChannels * sampleRate * bitDepth) / 8) || (numBytesPerBlock != (numChannels * numBytesPerSample)))
     {
+        printf("ERROR: the header data in this WAV file seems to be inconsistent\n");
         // std::cout << "ERROR: the header data in this WAV file seems to be inconsistent" << std::endl;
         return false;
     }
@@ -487,6 +501,7 @@ bool AudioFile<T>::decodeWaveFile (std::vector<uint8_t>& fileData)
     // check bit depth is either 8, 16 or 24 bit
     if (bitDepth != 8 && bitDepth != 16 && bitDepth != 24)
     {
+        printf("ERROR: this file has a bit depth that is not 8, 16 or 24 bits\n");
         // std::cout << "ERROR: this file has a bit depth that is not 8, 16 or 24 bits" << std::endl;
         return false;
     }

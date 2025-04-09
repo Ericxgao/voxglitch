@@ -32,6 +32,16 @@ struct Hazumi : Module
 	Hazumi()
 	{
     config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+
+    #ifdef METAMODULE
+    configInput(STEP_INPUT, "Step");
+    configInput(RESET_INPUT, "Reset");
+
+    for(int i=0; i < SEQUENCER_COLUMNS; i++)
+    {
+      configOutput(GATE_OUTPUTS + i, "Gate");
+    }
+    #endif
 	}
 
   //

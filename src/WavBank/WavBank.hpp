@@ -54,6 +54,11 @@ struct WavBank : VoxglitchSamplerModule
 		configInput(WAV_INPUT, "Wave Selection");
 		configInput(PITCH_INPUT, "Pitch");
 		// configSwitch(SWITCH_TEST, 0.0f, 1.0f, 1.0f, "Something", {"Value", "Other Value"});
+
+		#ifdef METAMODULE
+		configOutput(WAV_LEFT_OUTPUT, "Left Audio Output");
+		configOutput(WAV_RIGHT_OUTPUT, "Right Audio Output");
+		#endif
 	}
 
 	// Save

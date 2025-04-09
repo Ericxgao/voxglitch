@@ -1,4 +1,9 @@
+#ifndef METAMODULE
 #define MAX_GRAVEYARD_CAPACITY 120.0f
+#else
+#define MAX_GRAVEYARD_CAPACITY 60.0f
+#endif
+
 #define MAX_GHOST_SPAWN_RATE 30000.0f
 
 const float WAVEFORM_WIDGET_HEIGHT = 100.0;

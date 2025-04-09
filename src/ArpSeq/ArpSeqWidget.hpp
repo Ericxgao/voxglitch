@@ -79,8 +79,10 @@ struct NumberChooser : app::SvgKnob
 
     void onHover(const HoverEvent &e) override
     {
+        #ifndef METAMODULE
         GLFWcursor *cursor = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
         glfwSetCursor(APP->window->win, cursor);
+        #endif
 
         ParamWidget::onHover(e);
     }
@@ -88,7 +90,9 @@ struct NumberChooser : app::SvgKnob
     void onLeave(const event::Leave& e) override {
         ParamWidget::onLeave(e);
 
+        #ifndef METAMODULE
         glfwSetCursor(APP->window->win, NULL);
+        #endif
     }
 
     void appendContextMenu(Menu *menu) override

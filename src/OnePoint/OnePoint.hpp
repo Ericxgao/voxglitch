@@ -2,7 +2,11 @@
 // TODO:
 // - support Cardinal
 
+#ifndef METAMODULE
 #include <fstream>
+#else
+#include <cstdio>  // For FILE*, fopen, fread, fwrite, etc.
+#endif
 
 struct OnePoint : VoxglitchModule
 {
@@ -69,6 +73,18 @@ struct OnePoint : VoxglitchModule
     {
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
         configParam(CV_SEQUENCE_ATTN_KNOB, 0.0f, 1.0f, 1.0f, "Attenuator");
+
+        #ifdef METAMODULE
+        configInput(STEP_INPUT, "Step");
+        configInput(RESET_INPUT, "Reset");
+        configInput(NEXT_SEQUENCE_INPUT, "Next Sequence");
+        configInput(PREV_SEQUENCE_INPUT, "Prev Sequence");
+        configInput(ZERO_SEQUENCE_INPUT, "Zero Sequence");
+        configInput(CV_SEQUENCE_SELECT, "CV Sequence Select");
+
+        configOutput(CV_OUTPUT, "CV");
+        configOutput(EOL_OUTPUT, "End of Sequence");
+        #endif
     }
 
     //
@@ -254,35 +270,28 @@ struct OnePoint : VoxglitchModule
 
     void loadData(std::string path)
     {
-        std::ifstream input_file(path);
-
-        // Note: We don't set selected_sequence = 0 here anymore as it will be set in dataFromJson if available
-
         // Clear out existing data
         sequences.clear();
 
-        // test file open
+        FILE* input_file = fopen(path.c_str(), "r");
         if (input_file)
         {
-            std::string line = "";
-
-            while (std::getline(input_file, line))
+            char line[1024]; // Buffer for reading lines
+            while (fgets(line, sizeof(line), input_file))
             {
                 std::vector<float> sequence;
-
-                std::stringstream ss(line);
-
-                while( ss.good() )
+                char* token = strtok(line, ",\n");
+                
+                while (token != NULL)
                 {
-                    std::string substr;
-                    getline(ss, substr,',');
-                    sequence.push_back( std::stod(substr) );
+                    sequence.push_back(std::stof(token));
+                    token = strtok(NULL, ",\n");
                 }
 
                 sequences.push_back(sequence);
             }
 
-            input_file.close();
+            fclose(input_file);
         }
 
         reset();

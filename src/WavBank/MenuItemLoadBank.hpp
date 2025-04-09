@@ -8,8 +8,13 @@ struct MenuItemLoadBank : MenuItem
         WavBank *module = this->module;
         async_dialog_filebrowser(false, NULL, module->samples_root_dir.c_str(), "Load sample", [module](char *path) {
           if (path) {
-            if (char *rpath = strrchr(path, CARDINAL_OS_SEP))
-              *rpath = '\0';
+            // Remove the last chunk after the last slash but keep the slash
+            char *last_slash = strrchr(path, '/');
+            if (last_slash) {
+              *last_slash = '\0';
+            }
+            
+            printf("path: %s\n", path);
             pathSelected(module, path);
             free(path);
           }

@@ -9,6 +9,7 @@ struct GhostsLoadSample : MenuItem
     	async_dialog_filebrowser(false, NULL, module->samples_root_dir.c_str(), "Load sample", [module](char* filename) {
         if(filename)
         {
+			printf("filename: %s\n", filename);
           fileSelected(module, std::string(filename));
           free(filename);
         }
@@ -23,7 +24,8 @@ struct GhostsLoadSample : MenuItem
     if (filename != "")
 		{
 			module->sample.load(filename);
-      module->sample_rate_division = module->sample.sample_rate / APP->engine->getSampleRate();
+			printf("module->sample.sample_rate: %f\n", module->sample.sample_rate);
+      		module->sample_rate_division = module->sample.sample_rate / APP->engine->getSampleRate();
 			module->loaded_filename = module->sample.filename;
 			module->setRoot(filename);
 		}

@@ -140,6 +140,8 @@ struct CueResearchWidget : VoxglitchSamplerModuleWidget
     void onLeave(const event::Leave &e) override
     {
         // Reset cursor when leaving widget
+        #ifndef METAMODULE
         glfwSetCursor(APP->window->win, NULL);
+        #endif
     }
 };

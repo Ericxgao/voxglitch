@@ -12,8 +12,10 @@ struct SamplerX8LoadFolder : MenuItem
 		unsigned int sample_number = this->sample_number;
 		async_dialog_filebrowser(false, NULL, dir.c_str(), text.c_str(), [module, sample_number](char *path) {
 			if (path) {
+				#ifndef METAMODULE
 				if (char *rpath = strrchr(path, CARDINAL_OS_SEP))
 					*rpath = '\0';
+				#endif
 				pathSelected(module, sample_number, path);
 				free(path);
 			}

@@ -190,6 +190,13 @@ struct NoteDetector : VoxglitchModule
         octave_param_quantity->snapEnabled = true;
         octave_param_quantity->name = "Octave";
         paramQuantities[OCTAVE_SELECTION_KNOB] = octave_param_quantity;
+
+        #ifdef METAMODULE
+        configInput(CV_INPUT, "CV Input");
+        configInput(CLOCK_INPUT, "Clock Input");
+
+        configOutput(DETECTION_OUTPUT, "Detection Output");
+        #endif
     }
 
     // █▀█ █▀█ █▀█ █▀▀ █▀▀ █▀ █▀

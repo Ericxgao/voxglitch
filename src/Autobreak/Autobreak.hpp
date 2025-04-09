@@ -78,6 +78,18 @@ struct Autobreak : VoxglitchSamplerModule
     configParam(WAV_KNOB, 0.0f, 1.0f, 0.0f, "SampleSelectKnob");
     configParam(WAV_ATTN_KNOB, 0.0f, 1.0f, 1.0f, "SampleSelectAttnKnob");
 
+    #ifdef METAMODULE
+    configInput(RATCHET_INPUT, "Ratchet Input");
+    configInput(REVERSE_INPUT, "Reverse Input");
+    configInput(CLOCK_INPUT, "Clock Input");
+    configInput(RESET_INPUT, "Reset Input");
+    configInput(SEQUENCE_INPUT, "Sequence Input");
+    configInput(WAV_INPUT, "Wav Input");
+
+    configOutput(AUDIO_OUTPUT_LEFT, "Left Audio Output");
+    configOutput(AUDIO_OUTPUT_RIGHT, "Right Audio Output");
+    #endif
+
     std::fill_n(loaded_filenames, NUMBER_OF_SAMPLES, "[ EMPTY ]");
   }
 

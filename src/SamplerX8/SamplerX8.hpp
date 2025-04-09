@@ -56,6 +56,17 @@ struct SamplerX8 : VoxglitchSamplerModule
             SamplePlayer sample_player;
             sample_players.push_back(sample_player);
         }
+
+        #ifdef METAMODULE
+        for (unsigned int i = 0; i < NUMBER_OF_SAMPLES; i++)
+        {
+            configInput(TRIGGER_INPUTS + i, "Trigger " + std::to_string(i + 1));
+            configInput(POSITION_INPUTS + i, "Position " + std::to_string(i + 1));
+        }
+
+        configOutput(AUDIO_MIX_OUTPUT_LEFT, "Mix Left Audio Output");
+        configOutput(AUDIO_MIX_OUTPUT_RIGHT, "Mix Right Audio Output");
+        #endif
     }
 
     //

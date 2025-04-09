@@ -184,6 +184,14 @@ struct DrumRandomizer : VoxglitchModule
         paramQuantities[STEP_KNOB]->snapEnabled = true;
 
         configParam(PERCENTAGE_KNOB, 0.0f, 1.0f, 1.0f, "Percentage Knob");
+
+        #ifdef METAMODULE
+        configInput(GATE_INPUT, "Gate");
+        configInput(STEP_INPUT, "Step");
+        configInput(RESET_INPUT, "Reset");
+
+        configOutput(GATE_OUTPUT, "Gate");
+        #endif
     }
 
     void process(const ProcessArgs &args) override

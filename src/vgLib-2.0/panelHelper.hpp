@@ -97,14 +97,11 @@ struct PanelHelper
         // If not found in SVG, check VoxglitchPositions
         if (!found) {
             std::string panelName = m_moduleName + "_" + name;
-
-            printf("panelName: %s\n", panelName.c_str());
             
             if (!m_moduleName.empty()) {
                 // Search in the flattened map
                 for (const auto& pair : VoxglitchPositions::modules) {
                     if (pair.first == panelName) {
-                        printf("found: %s (%.3f, %.3f)\n", pair.first.c_str(), pair.second.x, pair.second.y);
                         return pair.second;
                     }
                 }

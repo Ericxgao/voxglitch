@@ -32,6 +32,17 @@ struct VectorRotation : Module {
         
         configInput(X_INPUT, "X Coordinate");
         configInput(Y_INPUT, "Y Coordinate");
+
+        #ifdef METAMODULE
+        configInput(ALPHA_INPUT, "X Rotation");
+        configInput(BETA_INPUT, "Y Rotation");
+        configInput(GAMMA_INPUT, "Z Rotation");
+
+        configOutput(X_OUTPUT, "X Coordinate");
+        configOutput(Y_OUTPUT, "Y Coordinate");
+        configOutput(Z_OUTPUT, "Z Coordinate");
+        #endif
+        
     }
 
     void rotatePoint(float* x, float* y, float* z, float alpha, float beta, float gamma) {
