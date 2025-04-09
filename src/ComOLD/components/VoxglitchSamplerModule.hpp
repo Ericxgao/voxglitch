@@ -26,7 +26,7 @@ struct VoxglitchSamplerModule : VoxglitchModule
     if (samples_root_dir_json) samples_root_dir = json_string_value(samples_root_dir_json);
   }
 
-#ifndef USING_CARDINAL_NOT_RACK
+#ifndef USING_CARDINAL_NOT_RACK || METAMODULE
   std::string selectFileVCV(std::string file_filters = "WAV:wav")
   {
     std::string filename_string = "";

@@ -36,10 +36,12 @@ struct BytebeatSegmentReadoutWidget : TransparentWidget
         }
 
         // Draw black background
+        #ifndef METAMODULE
         nvgBeginPath(vg);
         nvgRoundedRect(vg, 0, 0, box.size.x, box.size.y, 3.0);
         nvgFillColor(vg, nvgRGB(0, 0, 0));
         nvgFill(vg);
+        #endif
 
         std::shared_ptr<Font> font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Segment14.ttf"));
         if (font)
@@ -51,8 +53,10 @@ struct BytebeatSegmentReadoutWidget : TransparentWidget
             nvgTextAlign(vg, NVG_ALIGN_RIGHT | NVG_ALIGN_MIDDLE);
 
             // Draw a faded version of the 14 segment display
+            #ifndef METAMODULE
             nvgFillColor(args.vg, nvgRGBA(30, 30, 30, 0xff));
             nvgTextBox(args.vg, -16.0, box_size_y / 2.0, 56.7845, "~~~", NULL);
+            #endif
 
             // Set the color for the 14 segment text
             nvgFillColor(args.vg, nvgRGBA(255, 255, 255, 0xff));

@@ -67,7 +67,11 @@ struct ByteBeatWidget : ModuleWidget
         // ============================ READOUTS ===================================
 
         auto centerReadout = [](BytebeatSegmentReadoutWidget* widget, Vec pos) {
+            #ifndef METAMODULE
             widget->box.pos = pos.minus(Vec(widget->box_size_x / 2, widget->box_size_y / 2));
+            #else
+            widget->box.pos = pos.minus(Vec(-22, 11));
+            #endif
         };
 
         BytebeatSegmentReadoutWidget *param_1_readout_widget = new BytebeatSegmentReadoutWidget("000");

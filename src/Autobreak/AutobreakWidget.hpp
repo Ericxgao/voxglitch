@@ -15,6 +15,12 @@ struct AutobreakWidget : VoxglitchSamplerModuleWidget
 			asset::plugin(pluginInstance, "res/autobreak/autobreak_panel-dark.svg")
 		);
 
+        // Test JSON parsing by printing some widget positions
+        Vec wav_knob_pos = panelHelper.findNamed("wav_knob");
+        Vec wav_input_pos = panelHelper.findNamed("wav_input");
+        DEBUG("AutobreakWidget: wav_knob position: %.2f, %.2f", wav_knob_pos.x, wav_knob_pos.y);
+        DEBUG("AutobreakWidget: wav_input position: %.2f, %.2f", wav_input_pos.x, wav_input_pos.y);
+
 		// =================== PLACE COMPONENTS ====================================
 
 		// Screws
