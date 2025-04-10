@@ -14,9 +14,6 @@ struct SampleAudioBuffer
     // Trick to free up memory in buffers
     std::vector<float>().swap(left_buffer);
     std::vector<float>().swap(right_buffer);
-
-    left_buffer.resize(0);
-    right_buffer.resize(0);
   }
 
   void push_back(float audio_left, float audio_right)
@@ -32,7 +29,9 @@ struct SampleAudioBuffer
 
   void read(unsigned int index, float *left_audio_ptr, float *right_audio_ptr)
   {
-    if((index >= left_buffer.size()) || (index >= right_buffer.size()))
+    size_t buf_size = left_buffer.size();
+    
+    if(index >= buf_size)
     {
       *left_audio_ptr = 0;
       *right_audio_ptr = 0;
@@ -48,9 +47,10 @@ struct SampleAudioBuffer
   void readLI(double position, float *left_audio_ptr, float *right_audio_ptr)
   {
     unsigned int index = std::floor(position); // convert float to int
+    size_t buf_size = left_buffer.size();
 
     // If out of bounds, return zeros
-    if((index >= (left_buffer.size() - 1)) || ((index >= right_buffer.size() - 1)))
+    if(index >= (buf_size - 1))
     {
       *left_audio_ptr = 0;
       *right_audio_ptr = 0;
@@ -82,13 +82,14 @@ struct Sample
 
   Sample()
   {
-    sample_audio_buffer.clear();
-		loading = false;
-		filename = "[ empty ]";
+    // No need to clear already-empty buffer
+    // sample_audio_buffer.clear();
+    loading = false;
+    filename = "[ empty ]";
     display_name = "[ empty ]";
-		path = "";
-		sample_rate = 0;
-		channels = 0;
+    path = "";
+    sample_rate = 0;
+    channels = 0;
 
     audioFile.setNumChannels(2);
     audioFile.setSampleRate(44100);
@@ -99,7 +100,7 @@ struct Sample
     sample_audio_buffer.clear();
   }
 
-  bool load(std::string path)
+  bool load(const std::string& path)
   {
     // Set loading flags
     this->loading = true;
@@ -133,6 +134,9 @@ struct Sample
     //
     // Copy the sample data from the AudioFile object to floating point vectors
     //
+    sample_audio_buffer.left_buffer.reserve(numSamples);
+    sample_audio_buffer.right_buffer.reserve(numSamples);
+    
     for(int i = 0; i < numSamples; i++)
     {
       if(numChannels == 2)
@@ -148,6 +152,10 @@ struct Sample
 
       sample_audio_buffer.push_back(left, right);
     }
+    
+    // Now that the audioFile has been read into memory, clear it out
+    std::vector<float>().swap(audioFile.samples[0]);
+    std::vector<float>().swap(audioFile.samples[1]);
 
     // Store sample length and file information to this object for the rest
     // of the patch to reference.
@@ -159,10 +167,6 @@ struct Sample
 
     this->loading = false;
     this->loaded = true;
-
-    // Now that the audioFile has been read into memory, clear it out
-    audioFile.samples[0].resize(0);
-    audioFile.samples[1].resize(0);
 
     printf("sample.loaded: %d\n", this->loaded);
 
@@ -178,10 +182,10 @@ struct Sample
   // Where to put recording code and how to save it?
   void initialize_recording()
   {
-    // Clear out audioFile data.  audioFile represents the .wav file information
-    // that can be loaded or saved.  In this case, we're going to be saving incoming audio pretty soon.
-    audioFile.samples[0].resize(0);
-    audioFile.samples[1].resize(0);
+    // Clear out audioFile data. audioFile represents the .wav file information
+    // that can be loaded or saved. In this case, we're going to be saving incoming audio pretty soon.
+    std::vector<float>().swap(audioFile.samples[0]);
+    std::vector<float>().swap(audioFile.samples[1]);
 
     // Also clear out the sample audio information
     sample_audio_buffer.clear();
@@ -190,6 +194,15 @@ struct Sample
 
   void record_audio(float left, float right)
   {
+    // Reserve more space if needed to reduce reallocations
+    if (audioFile.samples[0].size() == audioFile.samples[0].capacity()) {
+      size_t new_capacity = audioFile.samples[0].empty() ? 44100 : audioFile.samples[0].capacity() * 2;
+      audioFile.samples[0].reserve(new_capacity);
+      audioFile.samples[1].reserve(new_capacity);
+      sample_audio_buffer.left_buffer.reserve(new_capacity);
+      sample_audio_buffer.right_buffer.reserve(new_capacity);
+    }
+    
     // Store incoming audio both in the audioFile for saving and in the sample for playback
     audioFile.samples[0].push_back(left);
     audioFile.samples[1].push_back(right);
@@ -198,7 +211,7 @@ struct Sample
     sample_length = sample_audio_buffer.size();
   }
 
-  void save_recorded_audio(std::string path)
+  void save_recorded_audio(const std::string& path)
   {
     audioFile.save(path);
   }
