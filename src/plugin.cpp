@@ -38,7 +38,7 @@ void init_VoxGlitch(Plugin* p)
   p->addModel(modelRepeater);
   p->addModel(modelSamplerX8);
   // p->addModel(modelSampler16P);
-  // p->addModel(modelSatanonaut);
+  p->addModel(modelSatanonaut);
   // p->addModel(modelSatanonautUnearthed);
   p->addModel(modelVectorRotation);
   p->addModel(modelWavBank);
