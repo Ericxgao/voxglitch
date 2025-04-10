@@ -1,4 +1,9 @@
+#ifndef METAMODULE
 #define MAX_GRAINS 140
+#else
+#define MAX_GRAINS 60
+#endif
+
 #define MAX_PITCH 128
 #define NUMBER_OF_SAMPLES 5
 #define NUMBER_OF_SAMPLES_FLOAT 5.0

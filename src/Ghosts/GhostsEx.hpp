@@ -191,6 +191,7 @@ struct GhostsEx
 
     float left_output = 0;
     float right_output = 0;
+    bool has_erased_ghosts = false;
 
     //
     // Process grains
@@ -204,14 +205,24 @@ struct GhostsEx
         *left_mix_output  += left_output;
         *right_mix_output += right_output;
         ghost.step(step_amount);
+        
+        // Track if we have any ghosts to erase
+        if(ghost.erase_me) {
+          has_erased_ghosts = true;
+        }
+      }
+      else {
+        has_erased_ghosts = true;
       }
     }
 
-    // perform cleanup of grains ready for removal
-    graveyard.erase(std::remove_if(
-      graveyard.begin(), graveyard.end(),
-      [](const Ghost& ghost) {
-        return ghost.erase_me;
-      }), graveyard.end());
+    // Only perform cleanup if there are ghosts to remove
+    if(has_erased_ghosts) {
+      graveyard.erase(std::remove_if(
+        graveyard.begin(), graveyard.end(),
+        [](const Ghost& ghost) {
+          return ghost.erase_me;
+        }), graveyard.end());
     }
-  };
+  }
+};
