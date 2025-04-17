@@ -16,7 +16,7 @@ void init_VoxGlitch(Plugin* p)
   pluginInstance = p;
   // p->addModel(modelArpSeq);
   p->addModel(modelAutobreak);
-  // p->addModel(modelAutobreakStudio);  
+  p->addModel(modelAutobreakStudio);  
   p->addModel(modelByteBeat);
   // p->addModel(modelDigitalProgrammer);
   // p->addModel(modelDigitalSequencer);

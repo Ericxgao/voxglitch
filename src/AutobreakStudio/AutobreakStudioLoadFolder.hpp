@@ -8,13 +8,18 @@ struct AutobreakStudioLoadFolder : MenuItem
         const std::string dir = root_dir.empty() ? "" : root_dir;
 #if defined(USING_CARDINAL_NOT_RACK) || defined(METAMODULE)
         AutobreakStudio *module = this->module;
-        async_dialog_filebrowser(false, NULL, dir.c_str(), text.c_str(), [module](char *path) {
-            if (path) {
-                if (char *rpath = strrchr(path, CARDINAL_OS_SEP))
-                    *rpath = '\0';
-                pathSelected(module, path);
-                free(path);
+        async_dialog_filebrowser(false, NULL, module->samples_root_dir.c_str(), "Load folder", [module](char *path) {
+          if (path) {
+            // Remove the last chunk after the last slash but keep the slash
+            char *last_slash = strrchr(path, '/');
+            if (last_slash) {
+              *last_slash = '\0';
             }
+            
+            printf("path: %s\n", path);
+            pathSelected(module, path);
+            free(path);
+          }
         });
 #else
         char *path = osdialog_file(OSDIALOG_OPEN_DIR, dir.c_str(), NULL, NULL);
