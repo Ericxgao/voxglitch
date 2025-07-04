@@ -81,9 +81,8 @@ struct GrainEngineMK2Widget : ModuleWidget
 
         for (int i = 0; i < NUMBER_OF_SAMPLES; i++)
         {
-            GrainEngineMK2LoadSample *menu_item_load_sample = new GrainEngineMK2LoadSample();
+            GrainEngineMK2LoadSample *menu_item_load_sample = createMenuItem<GrainEngineMK2LoadSample>(std::to_string(i + 1) + ": " + module->loaded_filenames[i]);
             menu_item_load_sample->sample_number = i;
-            menu_item_load_sample->text = std::to_string(i + 1) + ": " + module->loaded_filenames[i];
             menu_item_load_sample->module = module;
             menu->addChild(menu_item_load_sample);
         }

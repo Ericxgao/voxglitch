@@ -1,7 +1,12 @@
 struct GrainEngineMK2LoadSample : MenuItem
 {
 	GrainEngineMK2 *module;
-	unsigned int sample_number = 0;
+	int sample_number;
+
+	void step() override
+	{
+		text = std::to_string(sample_number + 1) + ": " + module->loaded_filenames[sample_number];
+	}
 
 	void onAction(const event::Action &e) override
 	{

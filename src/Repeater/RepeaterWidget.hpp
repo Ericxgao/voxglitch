@@ -66,9 +66,8 @@ struct RepeaterWidget : VoxglitchSamplerModuleWidget
 
         for (int i = 0; i < NUMBER_OF_SAMPLES; i++)
         {
-            MenuItemLoadSample *menu_item_load_sample = new MenuItemLoadSample;
+            MenuItemLoadSample *menu_item_load_sample = createMenuItem<MenuItemLoadSample>(std::to_string(i + 1) + ": " + module->loaded_filenames[i]);
             menu_item_load_sample->sample_number = i;
-            menu_item_load_sample->text = std::to_string(i + 1) + ": " + module->loaded_filenames[i];
             menu_item_load_sample->module = module;
             menu->addChild(menu_item_load_sample);
         }
